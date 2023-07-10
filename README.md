@@ -1,70 +1,141 @@
-# Getting Started with Create React App
+# 2. Creating a React App
+装上Node，就可以用npx创建react项目
+```shell
+npx create-react-app dojo-blog
+```
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+运行：
+```shell
+npm start
+```
 
-## Available Scripts
+# 3. Components & Templates
+和Vue一样，React也是组件化的框架，而模板不是用html，而是jsx书写。
+index.js 引用 App.js 并注入内容。
+App.js 书写 templates，然后`export`出去。
+在App.js中，有一个入口函数：
+```jsx
+import './App.css';
 
-In the project directory, you can run:
+function App() {
+	return (
+		// ... jsx templates
+	)
+}
 
-### `npm start`
+export default App;
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# 4 - Dynamic Values in Templates
+和 Vue 中类似，声明的变量，可以在模板中引用，只不过 Vue 用两对胡子括号，React 只用一对：
+```jsx
+import logo from './logo.svg';
+import './App.css';
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+function App() {
+  const welcome = 'ahhaha, 我在学react';
+  const obj = { name: 'haha', age: 12 };
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1>{ welcome}</h1>
+        <p>{ obj.name}</p>
+      </header>
+    </div>
+  );
+}
 
-### `npm test`
+export default App;
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 5 - Multiple Components
+在import和export和use组件方面，React和Vue相差无几。
 
-### `npm run build`
+Navbar组件：
+```jsx
+const Navbar = () => {
+  return (  
+    <nav className="navbar">
+      <h1>The Dojo Blog</h1>
+      <div className="links">
+        <a href="/">Home</a>
+        <a href="/create">New Blog</a>
+      </div>
+    </nav>
+  );
+}
+ 
+export default Navbar;
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+App.js
+```jsx
+import './App.css';
+import Navbar from './Navbar';
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+function App() {
+  return (
+    <div className="App">
+      <Navbar />
+    </div>
+  );
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export default App;
 
-### `npm run eject`
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# 6 - Adding Styles
+样式的增加方式稍有不同。
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+我们知道，Vue的样式是在每一个SFC下，有一个`<style></style>`的标签，指定全局或当前页面的样式，一般会加上scoped属性，防止污染其他页面的样式。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+而React的样式是通过在当前页面`import`样式文件，然后把样式注入到当前页面的。
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+也可以写内联样式：
+```jsx
+  <a href="/create" style={{
+    color: 'white',
+    backgroundColor: '#f1356d',
+    borderRadius: '8px'
+  }}>New Blog</a>
+```
 
-## Learn More
+# 7 - Click Events
+React中的click event, 也像引用变量一样，把引用的函数写在大括号中。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+普通点击事件写法： `onClick={function}`
+```jsx
+const Home = () => {
+  const printHello = () => {
+    console.log('hello');
+  }
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  return (  
+    <div className="home">
+      <button onClick={printHello}>Print Hello</button>
+    </div>
+  );
 
-### Code Splitting
+  // 打印结果： hello
+}
+ 
+export default Home;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+传参写法：用匿名函数包裹
+```jsx
+const Home = () => {
+  const printParams = (name) => {
+    console.log(name);
+  }
 
-### Analyzing the Bundle Size
+  return (  
+    <div className="home">
+      <button onClick={ ()=> {printParams('hehe')} }>Print Whatever You Pass</button>
+    </div>
+  );
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  // 打印结果： hehe
+```
