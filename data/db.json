@@ -1,0 +1,22 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "title": "today1",
+      "body": "lorem1",
+      "author": "mario1"
+    },
+    {
+      "id": 2,
+      "title": "today2",
+      "body": "lorem2",
+      "author": "mario2"
+    },
+    {
+      "id": 3,
+      "title": "today3",
+      "body": "lorem3",
+      "author": "mario3"
+    }
+  ]
+}
