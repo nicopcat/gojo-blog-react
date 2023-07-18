@@ -1,15 +1,22 @@
-const BlogList = ({blogs, title}) => {
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
+const BlogList = ({ blogs, title }) => {
+  const detail = (blog) => {
+    console.log(blog);
+
+  }
 
   return ( 
-    <div className="blog-list">
+    <div className="blog-preview">
       <h2>{title}</h2>
       {blogs.map(x => (
-      <div className="blog-preview" key={x.id}>
+        <Link to={`/blogs/${x.id}`} key={x.id}>
+      <div className="blog-preview"  onClick={()=>{detail(x)}}>
         <h2>{ x.title}</h2>
-        <p>{x.body}</p>
         <p>By {x.author}</p>
         <br />
-      </div> ))}
+          </div>
+      </Link> ))}
   </div>
    );
 }
