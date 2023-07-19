@@ -8,9 +8,10 @@ const BlogDetails = () => {
   const history = useHistory();
 
 
-  const handleDelete = (id) => {
+  const handleDelete = () => {
     const conf = window.confirm('确定删除嘛？');
     if (!conf) return;
+
     fetch('https://json-server-for-gojo.vercel.app/blogs/' + blog.id, {
       method: 'DELETE',
     }).then((res) => {

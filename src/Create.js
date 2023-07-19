@@ -10,14 +10,14 @@ const Create = () => {
 
 
   const handleSubmit = (e) => {
-    const blog = { title, body, author };
+    const blog = JSON.stringify({ title, body, author });
     setIsPending(true);
     fetch('https://json-server-for-gojo.vercel.app/blogs', {
       method: 'POST',
       headers: {
         'Content-Type':'application/json'
       },
-      body: JSON.stringify(blog)
+      body: blog
     }).then((res) => {
       console.log(res);
       setIsPending(false);
