@@ -1,14 +1,18 @@
 import { useState } from "react";
-import useFetch from "./useFetch";
+import { useHistory } from "react-router-dom";
 
 const Create = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [author, setAuthor] = useState('');
+  const [isPending, setIsPending] = useState(false);
+  const history = useHistory();
+
+
   const handleSubmit = (e) => {
-    console.log(title);
     const blog = { title, body, author };
-    fetch('http://localhost:8000/blogs', {
+    setIsPending(true);
+    fetch('https://json-server-for-gojo.vercel.app//blogs', {
       method: 'POST',
       headers: {
         'Content-Type':'application/json'
@@ -16,10 +20,16 @@ const Create = () => {
       body: JSON.stringify(blog)
     }).then((res) => {
       console.log(res);
+      setIsPending(false);
       if (res.ok) {
-        alert('博客发表成功~')
-        
+        alert("博客发表成功!");
+        // history.go(-1);
+        history.push('/')
+      } else {
+        alert(res.status + '，上传失败')
       }
+    }).catch((err) => {
+      throw err;
     })
   }
 
@@ -27,6 +37,7 @@ const Create = () => {
     <div className="create">
       <h2>Create a new blog</h2>
       <div className="content">
+        {isPending && <div>上传中……</div> }
         <form onSubmit={handleSubmit}>
           <label>标题</label>
           <input type="text" required value={title} onChange={(e)=>setTitle(e.target.value)} />
@@ -35,7 +46,7 @@ const Create = () => {
           <label>作者</label>
           <input type="text" required  value={author} onChange={(e)=>setAuthor(e.target.value)}/>
         </form>
-        <button onClick={handleSubmit}>提交</button>
+        <button onClick={handleSubmit} disabled={isPending}>{ isPending? "正在提交……":"提 交" }</button>
       </div>
     </div>
    );
