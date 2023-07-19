@@ -4,14 +4,14 @@ import { useHistory} from 'react-router-dom'
 
 const BlogDetails = () => {
   const { id } = useParams();
-  const { data: blog, isPending, error } = useFetch('https://json-server-for-gojo.vercel.app//blogs/' + id);
+  const { data: blog, isPending, error } = useFetch('https://json-server-for-gojo.vercel.app/blogs' + id);
   const history = useHistory();
 
 
   const handleDelete = (id) => {
     const conf = window.confirm('确定删除嘛？');
     if (!conf) return;
-    fetch('http://localhost:8000/blogs/' + blog.id, {
+    fetch('https://json-server-for-gojo.vercel.app/blogs/' + blog.id, {
       method: 'DELETE',
     }).then((res) => {
       console.log(res);
