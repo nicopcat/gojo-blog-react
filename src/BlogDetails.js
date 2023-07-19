@@ -4,7 +4,7 @@ import { useHistory} from 'react-router-dom'
 
 const BlogDetails = () => {
   const { id } = useParams();
-  const { data: blog, isPending, error } = useFetch('https://json-server-for-gojo.vercel.app/blogs' + id);
+  const { data: blog, isPending, error } = useFetch('https://json-server-for-gojo.vercel.app/blogs/' + id);
   const history = useHistory();
 
 
